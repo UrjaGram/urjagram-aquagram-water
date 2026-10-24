@@ -1,0 +1,69 @@
+{
+  "source": "ICAR - National Bureau of Soil Survey and Land Use Planning (NBSS&LUP), Nagpur",
+  "region": "Katol Block, Nagpur District, Maharashtra",
+  "soil_units": [
+    {
+      "unit_id": "NBSS-KAT-01",
+      "series_name": "Linga Series",
+      "soil_taxonomy": "Fine, smectitic, isohyperthermic Typic Haplusterts",
+      "local_name": "Deep Black Cotton Soil (Kari)",
+      "depth_cm": 110.0,
+      "clay_percentage": 54.0,
+      "sand_percentage": 18.0,
+      "silt_percentage": 28.0,
+      "available_water_capacity_mm_per_m": 165.0,
+      "steady_infiltration_rate_mm_per_hr": 5.2,
+      "drainage_class": "Moderately well drained to imperfectly drained",
+      "land_capability_class": "IIs",
+      "recharge_structure_suitability": {
+        "percolation_tank": "LOW",
+        "farm_pond_lined": "VERY_HIGH",
+        "check_dam": "MEDIUM",
+        "recharge_shaft": "NOT_RECOMMENDED"
+      },
+      "suitable_crops": ["Cotton", "Pigeonpea (Tur)", "Soybean"]
+    },
+    {
+      "unit_id": "NBSS-KAT-02",
+      "series_name": "Katol Series",
+      "soil_taxonomy": "Fine-loamy, smectitic, isohyperthermic Vertic Ustochrepts",
+      "local_name": "Medium Black Soil",
+      "depth_cm": 65.0,
+      "clay_percentage": 42.0,
+      "sand_percentage": 30.0,
+      "silt_percentage": 28.0,
+      "available_water_capacity_mm_per_m": 120.0,
+      "steady_infiltration_rate_mm_per_hr": 10.5,
+      "drainage_class": "Well drained",
+      "land_capability_class": "IIIe",
+      "recharge_structure_suitability": {
+        "percolation_tank": "MEDIUM",
+        "farm_pond_lined": "HIGH",
+        "check_dam": "HIGH",
+        "recharge_shaft": "MEDIUM"
+      },
+      "suitable_crops": ["Gram (Chana)", "Wheat", "Jowar", "Citrus (Orange)"]
+    },
+    {
+      "unit_id": "NBSS-KAT-03",
+      "series_name": "Bhasma Upland Series",
+      "soil_taxonomy": "Loamy-skeletal, mixed, hyperthermic Lithic Ustorthents",
+      "local_name": "Shallow Red/Bhasma Gravelly Soil",
+      "depth_cm": 22.0,
+      "clay_percentage": 20.0,
+      "sand_percentage": 58.0,
+      "silt_percentage": 22.0,
+      "available_water_capacity_mm_per_m": 50.0,
+      "steady_infiltration_rate_mm_per_hr": 32.0,
+      "drainage_class": "Excessively drained",
+      "land_capability_class": "IVes",
+      "recharge_structure_suitability": {
+        "percolation_tank": "VERY_HIGH",
+        "farm_pond_lined": "NOT_RECOMMENDED",
+        "check_dam": "VERY_HIGH",
+        "recharge_shaft": "VERY_HIGH"
+      },
+      "suitable_crops": ["Medicinal Agroforestry (Ashwagandha, Kalmegh)", "Fodder Grass", "Silvipasture"]
+    }
+  ]
+}

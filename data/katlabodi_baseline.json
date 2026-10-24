@@ -1,0 +1,46 @@
+{
+  "village_id": "IN-MH-NAG-KATLABODI",
+  "name": "Katlabodi Gram Panchayat",
+  "taluka": "Katol",
+  "district": "Nagpur",
+  "state": "Maharashtra",
+  "location": {
+    "latitude": 21.2833,
+    "longitude": 78.5833,
+    "elevation_m": 435.0
+  },
+  "demographics": {
+    "population": 717,
+    "households": 160,
+    "st_population_percentage": 52.2,
+    "primary_occupation": "Agriculture and Allied (75%)"
+  },
+  "land_use_hectares": {
+    "total_geographical_area": 671.16,
+    "forest_area": 416.28,
+    "net_sown_area": 190.10,
+    "irrigated_area": 141.25,
+    "permanent_pasture": 31.62
+  },
+  "hydrogeology": {
+    "aquifer_type": "Deccan Basalt (Weathered and Fractured Vesicular Traps)",
+    "pre_monsoon_water_table_mbgl": 16.5,
+    "post_monsoon_water_table_mbgl": 13.8,
+    "current_water_table_mbgl": 15.8,
+    "water_table_ft": 51.8,
+    "safe_yield_mbgl_threshold": 16.0,
+    "total_estimated_extractable_reserve_m3": 850000.0,
+    "current_storage_m3": 380000.0,
+    "agricultural_borewells_count": 42,
+    "average_pump_hp": 5.0,
+    "power_supply_hours_per_day": 8.0,
+    "average_pumping_draw_m3_per_day": 1450.0,
+    "domestic_draw_m3_per_day": 45.0
+  },
+  "meteorology_2026": {
+    "annual_normal_rainfall_mm": 1050.0,
+    "received_monsoon_rainfall_mm": 682.5,
+    "deficit_percentage": 35.0,
+    "drought_declaration_status": "Severe Drought (G.O.M. Sept 2026)"
+  }
+}

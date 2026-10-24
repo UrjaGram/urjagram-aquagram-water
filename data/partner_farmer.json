@@ -1,0 +1,25 @@
+{
+  "farmer_code": "Farmer-KB-01",
+  "village_id": "IN-MH-NAG-KATLABODI",
+  "anonymized_location": "South-West Quarter, Katlabodi Village",
+  "family_size": 5,
+  "land_holding_acres": 3.5,
+  "soil_series": "Katol Series (NBSS-KAT-02)",
+  "irrigation_source": {
+    "type": "Single Private Borewell",
+    "depth_feet": 160.0,
+    "static_water_level_feet": 52.0,
+    "pump_type": "Submersible Electric",
+    "pump_hp": 5.0,
+    "grid_power_availability": "8 hours/day (Night Shift 10 PM - 6 AM this week)"
+  },
+  "current_cropping_plan": {
+    "kharif_crop": "Cotton intercropped with Pigeonpea (Tur)",
+    "kharif_status": "Harvesting phase; suffered yield reduction due to August dry spell",
+    "rabi_crop_planned": "Gram (Chana)",
+    "rabi_acres": 2.0,
+    "water_requirement_mm": 250.0,
+    "total_water_needed_m3": 2023.5
+  },
+  "core_dilemma": "Whether to sow full 2.0 acres of Rabi Chana or reduce to 1.0 acre, given that the borewell discharge dropped from 2.5 inches to 1.5 inches in October."
+}

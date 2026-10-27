@@ -1,0 +1,154 @@
+================================================================================
+SYNTHETIC & ASSUMED DATA INVENTORY
+AquaGramOS: Village Groundwater & Soil Intelligence Engine
+UrjaGram Sustainable Development Framework (USDF) · Pilot: Katlabodi, Nagpur
+================================================================================
+
+This document provides a strict, transparent audit of all synthetic, estimated, 
+and assumed data utilized within the AquaGram-Water prototype. Where real ground 
+sensor logs were unavailable from the field visits, realistic agro-hydrological 
+and regional literature benchmarks were substituted to allow the decision engine 
+and digital twin to function end-to-end.
+
+Use this register to systematically substitute field-verified measurements as 
+the Katlabodi telemetry is collected.
+
+--------------------------------------------------------------------------------
+1. PARTNER FARMER PROFILE (File: data/partner_farmer.json)
+--------------------------------------------------------------------------------
+All parameters under "Farmer-KB-01" are SYNTHETIC ARCHETYPES representing a typical 
+smallholder tribal farmer in Katlabodi:
+
+[PARAMETER] farmer_code: "Farmer-KB-01"
+  • Current Value: Synthetic anonymized identifier.
+  • Reality: As mandated by Amar Nath Sir, each intern must adopt one real farmer 
+    family. This persona was modeled based on the village median holding.
+  • Replacement Plan: Replace with the actual interviewed farmer's data from the 
+    Oct 16-17 village visit.
+
+[PARAMETER] land_holding_acres: 3.5 acres
+  • Current Value: 3.5 acres (1.41 ha).
+  • Assumption Rationale: Katlabodi has 190.1 ha net sown area across 160 households, 
+    yielding an average operated holding of ~1.19 ha (~3.0 acres).
+  • Replacement: Actual 7/12 land extract (Satbara Utara) of the partner farmer.
+
+[PARAMETER] borewell_depth_feet: 160.0 ft
+  • Current Value: 160.0 ft.
+  • Assumption Rationale: Typical drilling depth in Katol basalt to strike vesicular 
+    inter-trappean aquifer layers.
+  • Replacement: Actual driller's measurement or casing depth.
+
+[PARAMETER] static_water_level_feet: 52.0 ft (15.85 mbgl)
+  • Current Value: 52.0 ft.
+  • Assumption Rationale: Survey team (Varad & Raj) confirmed village water tables 
+    fluctuate between 40 and 60 ft. 52.0 ft is a representative mid-range point.
+  • Replacement: Direct water level tape measurement from partner farmer's borewell.
+
+[PARAMETER] borewell_discharge_lps: 1.5 liters/second (~1.5 inches pipe discharge)
+  • Current Value: 1.5 lps.
+  • Assumption Rationale: Standard pre-winter discharge rate of weathered basalt 
+    borewells in Katol block during a drought year.
+  • Replacement: Bucket-and-stopwatch discharge test at the wellhead.
+
+[PARAMETER] pump_hp: 5.0 HP submersible
+  • Current Value: 5.0 HP.
+  • Assumption Rationale: Most subsidized MSEDCL agricultural pumps in Vidarbha 
+    are rated 3 HP or 5 HP.
+  • Replacement: Nameplate reading on the farmer's pump controller.
+
+
+--------------------------------------------------------------------------------
+2. HYDROGEOLOGY & WATER BALANCE TOTALS (File: data/katlabodi_baseline.json)
+--------------------------------------------------------------------------------
+
+[PARAMETER] agricultural_borewells_count: 42
+  • Current Value: 42 borewells.
+  • Assumption Rationale: The CSR proposal documents 141.25 ha of groundwater-irrigated 
+    land. Assuming an average command area of 3 to 3.5 ha per operational borewell 
+    yields ~40 to 45 borewells across the 3 settlements (Katlabodi, Murli, Dhankundav).
+  • Replacement: Complete borewell census by the Gram Panchayat / Jal Sakhi cadre.
+
+[PARAMETER] total_estimated_extractable_reserve_m3: 850,000 m³
+  • Current Value: 850,000 m³.
+  • Assumption Rationale: Hydrogeological estimation formula:
+      Reserve = Recharge Area (400 ha) × Saturated Basalt Thickness (10 m) × Specific Yield (0.0212)
+    Based on CGWB NAQUIM norms for Deccan Trap weathered basalt.
+  • Replacement: Formal pumping test and transmissivity assessment from CGWB/GSDA 
+    Katol Taluka report.
+
+[PARAMETER] current_storage_m3: 380,000 m³
+  • Current Value: 380,000 m³.
+  • Assumption Rationale: Reflects a 45% post-monsoon storage level due to the 
+    declared 2026 drought (35% rainfall deficit).
+  • Replacement: Piezometric monitoring network data across pre- and post-monsoon.
+
+[PARAMETER] domestic_draw_m3_per_day: 45.0 m³/day
+  • Current Value: 45.0 m³/day.
+  • Assumption Rationale: 717 residents × 62.7 liters per capita per day (LPCD), 
+    consistent with Jal Jeevan Mission rural service level benchmark (55 LPCD + 15% distribution loss).
+  • Replacement: Flow meter readings on the Gram Panchayat overhead reservoir (ESR).
+
+[PARAMETER] average_pumping_draw_m3_per_day: 1,450.0 m³/day
+  • Current Value: 1,450.0 m³/day.
+  • Assumption Rationale: 42 borewells operating an average of 4.5 hours per day 
+    at ~2.1 lps net discharge = ~1,450 m³/day during Rabi peak.
+  • Replacement: Energy consumption log analysis from MSEDCL feeder substation.
+
+[PARAMETER] received_monsoon_rainfall_mm: 682.5 mm
+  • Current Value: 682.5 mm (in 2026).
+  • Assumption Rationale: Normal annual rainfall for Katol is ~1,050 mm. A 35% 
+    monsoon deficit (Trigger 1 of Drought Management Code) results in 682.5 mm.
+  • Replacement: Actual Katol Tehsil rain-gauge record from Mahaveedham portal.
+
+
+--------------------------------------------------------------------------------
+3. SOIL SURVEY PARAMETERS (File: data/nbsslup_soils_katol.json)
+--------------------------------------------------------------------------------
+The Soil Series names (Linga Series, Katol Series, Bhasma Upland) and their USDA 
+taxonomies (Typic Haplusterts, Vertic Ustochrepts, Lithic Ustorthents) are REAL 
+benchmark series published by ICAR-NBSS&LUP Nagpur for Katol Block.
+
+However, the specific quantitative values:
+  • Linga Series: clay = 54.0%, AWC = 165 mm/m, infiltration = 5.2 mm/hr
+  • Katol Series: clay = 42.0%, AWC = 120 mm/m, infiltration = 10.5 mm/hr
+  • Bhasma Series: clay = 20.0%, AWC = 50 mm/m, infiltration = 32.0 mm/hr
+are REGIONAL BENCHMARK AVERAGES from NBSS&LUP technical monographs (e.g. Linga 
+Benchmark Soil Series bulletin), rather than laboratory soil core tests from 
+Katlabodi's specific cadastral survey numbers.
+
+Replacement: Physical soil sampling by VNIT/Nandini (Soil Module) using Soil 
+Health Card protocol.
+
+
+--------------------------------------------------------------------------------
+4. JEV SYSTEM-ONE DECISION ENGINE (File: src/jev_engine.py)
+--------------------------------------------------------------------------------
+The proprietary "Jev" model by TypeSafe AI is an external commercial model. 
+In this prototype:
+  • The Jev scoring behavior is SIMULATED using a high-speed multi-criteria 
+    classification heuristic mapping depth, storage, and dry spells into 
+    discrete enums [NORMAL, ADVISORY, WARNING, EMERGENCY].
+  • The HARD SAFETY GUARDRAILS (enforcing minimum WARNING if water table > 16.5 mbgl) 
+    are 100% real, deterministic, and non-negotiable in code.
+
+
+--------------------------------------------------------------------------------
+5. REAL GROUNDED DATASETS (CONFIRMED GROUND TRUTH)
+--------------------------------------------------------------------------------
+The following data points in the project are 100% REAL and sourced from official 
+government records and ground visits:
+  1. Katlabodi Census 2011 Village Code: 535565
+  2. Total Population: 717, Households: 160, ST Population: 52.2% (Census 2011)
+  3. Total Geographic Area: 671.16 ha (Katlabodi: 173.35 ha, Murli: 263.34 ha, Dhankundav: 234.47 ha)
+  4. Forest Cover: 416.28 ha (62.0% of GP area)
+  5. Irrigated Area: 141.25 ha (74.3% of net sown area)
+  6. Livestock Herd: 906 animals in GP animal register (~1,000 total)
+  7. Maharashtra Drought Declaration: GR issued Sept 2026 covering 265 talukas including Katol.
+  8. Electrical Grid: 24/7 domestic supply, 8 hours/day alternating shift agricultural supply.
+  9. Connectivity: 0 cellular/internet tower coverage in settlement; non-functional BBNL office.
+  10. CEA National Grid Carbon Emission Factor: 0.82 kg CO₂/kWh (CEA CO₂ Baseline Database v19).
+
+================================================================================
+Document generated for UrjaGram Innovations DEVTech Platform Audit
+Author: Kushagra Singh Kushwah (VNIT Nagpur)
+================================================================================

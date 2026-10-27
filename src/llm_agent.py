@@ -5,11 +5,25 @@ Implements the first stage of:
 """
 
 import os
+import json
+import requests
+from pathlib import Path
 from typing import Dict, Any
 
 class LLMAdvisoryAgent:
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
+        if not self.api_key:
+            # Check .env file in project root
+            env_file = Path(__file__).resolve().parent.parent / ".env"
+            if env_file.exists():
+                with open(env_file, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith("GEMINI_API_KEY="):
+                            self.api_key = line.split("=", 1)[1].strip().strip('"').strip("'")
+                            os.environ["GEMINI_API_KEY"] = self.api_key
+                            break
 
     def generate_advisories(
         self,
@@ -18,7 +32,7 @@ class LLMAdvisoryAgent:
         soil_profile: Dict[str, Any],
         alert_level: str,
         action_directive: str
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Any]:
         """
         Generates bilingual explainable reasoning:
         1. English Technical Agronomic Summary
@@ -26,16 +40,21 @@ class LLMAdvisoryAgent:
         """
         if self.api_key:
             try:
-                return self._call_gemini_api(
+                res = self._call_gemini_api(
                     farmer_data, hydrology_metrics, soil_profile, alert_level, action_directive
                 )
+                if res and "english_technical" in res and "marathi_farmer" in res:
+                    res["generation_source"] = "LIVE_GEMINI_API (gemini-3.5-flash)"
+                    return res
             except Exception as e:
                 # Log error and fall back gracefully to template engine
                 pass
         
-        return self._generate_template_advisories(
+        fallback = self._generate_template_advisories(
             farmer_data, hydrology_metrics, soil_profile, alert_level, action_directive
         )
+        fallback["generation_source"] = "DETERMINISTIC_OFFLINE_TEMPLATE"
+        return fallback
 
     def _generate_template_advisories(
         self,
@@ -93,26 +112,46 @@ class LLMAdvisoryAgent:
         }
 
     def _call_gemini_api(self, farmer, metrics, soil, alert, action) -> Dict[str, str]:
-        import requests
-        prompt = f"""
-You are the Agro-Hydrology AI for UrjaGram DEVTech in Katlabodi village, Nagpur.
-Data:
-Farmer: {farmer.get('farmer_code')}
-Crop: {farmer.get('current_cropping_plan', {}).get('rabi_crop_planned')}
-Water Table: {metrics.get('current_water_table_ft')} ft
-Days Left: {metrics.get('days_of_water_remaining')} days
-Soil: {soil.get('series_name')}
-Alert: {alert}
-Action Directive: {action}
+        farmer_code = farmer.get("farmer_code", "Farmer-KB-01")
+        crop = farmer.get("current_cropping_plan", {}).get("rabi_crop_planned", "Gram (Chana)")
+        acres = farmer.get("current_cropping_plan", {}).get("rabi_acres", 2.0)
+        water_table_ft = metrics.get("current_water_table_ft", 52.0)
+        days_left = metrics.get("days_of_water_remaining", 18.0)
+        soil_name = soil.get("series_name", "Katol Series")
 
-Output a JSON with:
-"english_technical": 2-sentence agronomic technical summary.
-"marathi_farmer": 2-sentence simple, respectful, actionable Marathi message for the tribal farmer.
+        prompt = f"""
+You are the Agro-Hydrology AI for UrjaGram DEVTech operating in Katlabodi tribal village, Katol, Nagpur (severe drought region).
+Input Data:
+- Farmer Code: {farmer_code}
+- Planned Rabi Crop: {crop} ({acres} acres)
+- Water Table Depth: {water_table_ft} ft
+- Aquifer Days Remaining: {days_left} days
+- Soil Series: {soil_name}
+- Jev Decision Status: {alert}
+- Action Directive: {action}
+
+Respond ONLY with a valid JSON object matching this schema:
+{{
+  "english_technical": "2-sentence agronomic technical explanation of soil moisture status, groundwater draw limits, and protective irrigation.",
+  "marathi_farmer": "2-sentence direct, respectful, simple Marathi advisory for the tribal farmer on how to save their borewell water and protect the standing crop."
+}}
 """
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}"
-        res = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]}, timeout=10)
-        res_json = res.json()
-        text = res_json['candidates'][0]['content']['parts'][0]['text']
-        import json
-        clean_text = text.replace("```json", "").replace("```", "").strip()
-        return json.loads(clean_text)
+        models_to_try = ["gemini-3.5-flash", "gemini-2.5-flash-lite", "gemini-3.8-flash"]
+        for model in models_to_try:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={self.api_key}"
+            payload = {
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {"responseMimeType": "application/json"}
+            }
+            try:
+                res = requests.post(url, json=payload, timeout=12)
+                if res.status_code == 200:
+                    data = res.json()
+                    raw_text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    parsed = json.loads(raw_text)
+                    if "english_technical" in parsed and "marathi_farmer" in parsed:
+                        return parsed
+            except Exception:
+                continue
+
+        raise RuntimeError("All Gemini API candidate models exhausted")
